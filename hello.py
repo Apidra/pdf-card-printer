@@ -19,16 +19,6 @@ for filename in os.listdir(directory):
         else:
             pix.save("{}\\back{}.jpg".format(output_directory, card_number), jpg_quality=100)
             card_number += 1
-        
-
-# # COMPILED PDF OF FRONTS GENERATION # #
-frontImages = []
-backImages = []
-for image in os.listdir(output_directory):
-    if image.startswith("front"):
-        frontImages.append(Image.open("{}\\{}".format(output_directory, image)))
-    elif image.startswith("back"):
-        backImages.append(Image.open("{}\\{}".format(output_directory, image)))
 
 pixy = Image.open("{}\\{}".format(output_directory, "front0.jpg"))
 margin = 36
