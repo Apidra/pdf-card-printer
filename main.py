@@ -1,13 +1,17 @@
 import fitz
 import os
 from PIL import Image
+import shutil
 
-directory = 'pdf'
-output_directory = 'nightmare'
+directory = 'pdfInput'
+output_directory = 'pdfBin'
 zoom = 1
 mat = fitz.Matrix(zoom, zoom)
 card_number = 0
-single_sided_index = [10]
+single_sided_index = []
+
+shutil.rmtree('pdfBin') 
+os.mkdir('pdfBin')
 
 # # # IMAGE GENERATION # #
 for filename in os.listdir(directory):
@@ -21,7 +25,9 @@ for filename in os.listdir(directory):
             card_number += 1
 
 pixy = Image.open("{}\\{}".format(output_directory, "front0.jpg"))
+# # Page Margin (set to min margin of your printer) # # 
 margin = 36
+# # Output Card Height and Width (in dpi) # # 
 cardWidth = 198 
 cardHeight = 342 
 # 1 inch = 72pt
@@ -47,5 +53,5 @@ for i in range(docLen):
             doc[pageNum].insert_image(fitz.Rect(cardWidth + margin, cardHeight + margin, cardWidth*2 + margin, cardHeight*2 + margin), filename = "{}\\back{}.jpg".format(output_directory, i))
         pageNum += 1
         
-doc.save("testing2.pdf")
+doc.save("output.pdf")
 
