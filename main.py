@@ -9,9 +9,12 @@ zoom = 1
 mat = fitz.Matrix(zoom, zoom)
 card_number = 0
 side_number = 0
+single_side_new_card = True
+
 # # # INSERT SINGLE CARD INDEXES BELOW (PAGE NUMBER MINUS 1) # # #
 single_sided_index = [4,5,6,7,8,9,10]
-single_side_new_card = True
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+
 
 # # # INSERT INDEXES OF PLENTIFUL UPGRADES AND NON-UNIQUE MODELS # # # 
 # # # TO THE APPROPRIATE PLENTIFUL LIST (PAGE NUMBER MINUS 1)    # # #
@@ -21,6 +24,7 @@ plentiful.append([4,5,6,7,8,9,10]) #plentiful 2
 plentiful.append([23,24,29,30]) #plentiful 3
 plentiful.append([]) #plentiful 4
 plentiful.append([]) #plentiful 5
+# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
 shutil.rmtree('pdfBin') 
 os.mkdir('pdfBin')
