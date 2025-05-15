@@ -11,6 +11,13 @@ card_number = 0
 side_number = 0
 # # # INSERT SINGLE CARD INDEXES BELOW (PAGE NUMBER MINUS 1) # # #
 single_sided_index = [4,5,6,7,8,9,10]
+single_side_new_card = True
+
+plentiful = []
+plentiful.append([4,5,6,7,8,9,10]) #plentiful 2
+plentiful.append([23,24,29,30]) #plentiful 3
+plentiful.append([]) #plentiful 4
+plentiful.append([]) #plentiful 5
 
 shutil.rmtree('pdfBin') 
 os.mkdir('pdfBin')
@@ -24,18 +31,43 @@ for filename in os.listdir(directory):
             if side_number % 2 == 0: 
                 pix.save("{}\\front{}.jpg".format(output_directory, card_number), jpg_quality=100)
                 side_number += 1
+                for i in plentiful:
+                    if page.number in i:
+                        for n in range(plentiful.index(i) + 1):
+                            pix.save("{}\\front{}.jpg".format(output_directory, (card_number+n+1)), jpg_quality=100)
+
             else:
                 pix.save("{}\\back{}.jpg".format(output_directory, card_number), jpg_quality=100)
                 card_number += 1
                 side_number += 1
+                for i in plentiful:
+                    if page.number in i:
+                        for n in range(plentiful.index(i) + 1):
+                            pix.save("{}\\back{}.jpg".format(output_directory, (card_number)), jpg_quality=100)
+                            card_number += 1
+            
         else:
             pix = page.get_pixmap(matrix = mat, dpi = 300)
-            if single_sided_index.index(page.number) % 2 == 0:
+            if single_side_new_card:
                 pix.save("{}\\front{}.jpg".format(output_directory, card_number), jpg_quality=100)
                 front_card_number = card_number
-                if single_sided_index.index(page.number) == len(single_sided_index)-1:
+                single_side_new_card = False
+                for i in plentiful:
+                        if page.number in i:
+                            for n in range(plentiful.index(i) + 1):
+                                if n % 2 == 0:
+                                    pix.save("{}\\back{}.jpg".format(output_directory, (card_number)), jpg_quality=100)
+                                    card_number += 1
+                                    single_side_new_card = True
+                                else:
+                                    pix.save("{}\\front{}.jpg".format(output_directory, (card_number)), jpg_quality=100)
+                                    front_card_number = card_number
+                                    single_side_new_card = False
+
+                if (single_sided_index.index(page.number) == len(single_sided_index)-1 and (page.number not in plentiful[0] and page.number not in plentiful[2])) :
                     pix.save("{}\\back{}.jpg".format(output_directory, card_number), jpg_quality=100)
                     card_number += 1
+                    single_side_new_card = True
             else:
                 pix.save("{}\\back{}.jpg".format(output_directory, front_card_number), jpg_quality=100)
                 card_number += 1
@@ -51,9 +83,11 @@ cardHeight = 342
 ##########################################################################################
 
 doc = fitz.Document()
+# # # can probably be removed?
 docLen = int(len(os.listdir(output_directory))/2)
 if int(len(os.listdir(output_directory))%2) != 0:
     docLen += 1
+# # # 
 
 pageNum = 0
 for i in range(docLen):
