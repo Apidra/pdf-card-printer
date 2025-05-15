@@ -29,13 +29,6 @@ for filename in os.listdir(directory):
                 card_number += 1
                 side_number += 1
         else:
-            if single_sided_index.index(page.number) % 2 == 0:
-                card_number += 1
-    card_number = 0
-    side_number = 0
-    front_card_number = 0
-    for page in doc:
-        if page.number in single_sided_index:
             pix = page.get_pixmap(matrix = mat, dpi = 300)
             if single_sided_index.index(page.number) % 2 == 0:
                 pix.save("{}\\front{}.jpg".format(output_directory, card_number), jpg_quality=100)
@@ -45,13 +38,6 @@ for filename in os.listdir(directory):
                     card_number += 1
             else:
                 pix.save("{}\\back{}.jpg".format(output_directory, front_card_number), jpg_quality=100)
-                card_number += 1
-
-        else:
-            if side_number % 2 == 0:
-                side_number += 1
-            else:
-                side_number += 1
                 card_number += 1
         
 
