@@ -11,10 +11,16 @@ card_number = 0
 side_number = 0
 single_side_new_card = True
 
+# # Output Card Height and Width (in dpi, 1 inch = 72pt) # # 
+cardWidth = 198 
+cardHeight = 342
+
+# # Page Margin (set to min margin of your printer) # # 
+margin = 36
+
 # # # INSERT SINGLE CARD INDEXES BELOW (PAGE NUMBER MINUS 1) # # #
 single_sided_index = [4,5,6,7,8,9,10]
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
-
 
 # # # INSERT INDEXES OF PLENTIFUL UPGRADES AND NON-UNIQUE MODELS # # # 
 # # # TO THE APPROPRIATE PLENTIFUL LIST (PAGE NUMBER MINUS 1)    # # #
@@ -81,13 +87,6 @@ for filename in os.listdir(directory):
         
 
 pixy = Image.open("{}\\{}".format(output_directory, "front0.jpg"))
-# # Page Margin (set to min margin of your printer) # # 
-margin = 36
-# # Output Card Height and Width (in dpi) # # 
-cardWidth = 198 
-cardHeight = 342 
-# 1 inch = 72pt
-##########################################################################################
 
 doc = fitz.Document()
 # # # can probably be removed?
